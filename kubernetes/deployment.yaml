@@ -28,6 +28,17 @@ spec:
           value: "some-value" # Variable d'environnement pour le conteneur
         - name: CONFIG_PATH
           value: "/etc/config/config.json" # Une autre variable d'environnement pour le conteneur
+        - name: CONFIG_VAR
+          valueFrom:
+            configMapKeyRef:
+              name: CONFIG_MAP_NAME    # Le nom du ConfigMap depuis lequel nous récupérons la valeur
+              key: CONFIG_VAR_KEY      # La clé spécifique dans le ConfigMap qui contient la valeur de cette variable
+        - name: SECRET_VAR
+          valueFrom:
+            secretKeyRef:
+              name: SECRET_NAME        # Le nom de la ressource Secret à partir de laquelle nous récupérons la valeur
+              key: SECRET_VAR_KEY      # La clé spécifique dans le Secret qui stocke la valeur de cette variable
+
         volumeMounts:
         - name: config-volume
           mountPath: /etc/config # Chemin de montage pour le volume à l'intérieur du conteneur
